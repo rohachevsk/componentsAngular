@@ -1,4 +1,5 @@
-import { Component, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, HostBinding } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ProfilePhoto } from './components/profile-photo/profile-photo';
 import { Header } from './components/header/header';
@@ -7,11 +8,17 @@ import { Experience } from './components/experience/experience';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ProfilePhoto, Header, Skills, Experience],
+  standalone: true,
+  imports: [CommonModule, RouterOutlet, ProfilePhoto, Header, Skills, Experience],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrls: ['./app.css']
 })
 export class App {
+  theme = 'light';
+  setTheme(theme: 'light' | 'dark') {
+    this.theme = theme;
+  }
+
   header = {
     FIO: "Rohachevskyi Ivan Vladislavovich",
     phone: "380991234567",
@@ -25,5 +32,9 @@ export class App {
     linkGitHub: "https://www.github.com/in/roha-ivan-vladislavovich/",
     linkLinkedin: "https://www.Linkedin.com/in/roha-ivan-vladislavovich/",
   };
+  emailColor = 'black';
 
+toggleEmailColor() {
+  this.emailColor = this.emailColor === 'black' ? 'red' : 'black';
+}
 }

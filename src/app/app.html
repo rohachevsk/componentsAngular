@@ -1,9 +1,17 @@
-<ul>
+<ul [ngClass]="theme">
     <li><img [src]="header.photo" alt="photo"></li>
     <li>{{ header.FIO }}</li>
     <li>{{ header.phone }}</li>
-    <li>{{ header.email }}</li>
+    <li [ngStyle]="{ color: emailColor }">
+        {{ header.email }}
+    </li>
     <li>{{ header.city }}</li>
     <li><a href="https://github.com/rohachevsk" target="_blank">GitHub</a></li>
     <li><a href="https://www.linkedin.com" target="_blank">LinkedIn</a></li>
 </ul>
+
+<button (click)="setTheme('light')">☀️</button>
+<button (click)="setTheme('dark')">🌙</button>
+<button (click)="toggleEmailColor()">
+  Toggle email color
+</button>
