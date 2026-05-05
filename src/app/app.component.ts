@@ -1,20 +1,22 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostBinding } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ProfilePhoto } from './components/profile-photo/profile-photo';
-import { Header } from './components/header/header';
-import { Skills } from './components/skills/skills';
-import { Experience } from './components/experience/experience';
+import { Task } from './models/task.model';
+import { TaskService } from './services/task.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterOutlet, ProfilePhoto, Header, Skills, Experience],
+  imports: [CommonModule, FormsModule, ProfilePhoto],
   templateUrl: './app.html',
   styleUrls: ['./app.css']
 })
 export class App {
+  constructor(private taskService: TaskService) {
+    this.tasks = this.taskService.getTasks();
+  }
+
   theme = 'light';
   setTheme(theme: 'light' | 'dark') {
     this.theme = theme;
@@ -50,8 +52,12 @@ export class App {
     this.emailColor = this.emailColor === 'black' ? 'red' : 'black';
   }
 
-  deleteTask(index: number) {
-    this.tasks.splice(index, 1);
+  deleteTask(id: number) {
+    this.taskService.deleteTask(id);
+  }
+
+  setTaskCompleted(id: number, completed: boolean) {
+    this.taskService.setCompleted(id, completed);
   }
   
   imageOptions = [
@@ -60,22 +66,18 @@ export class App {
     { label: 'Photo 3', src: '/images3.jpeg' },
   ];
 
-  tasks = [
-    { id: 1, title: 'Task 1', description: 'Description for Task 1', completed: false, photo: '/images1.jpeg' },
-    { id: 2, title: 'Task 2', description: 'Description for Task 2', completed: false, photo: '/images2.jpeg' },
-    { id: 3, title: 'Task 3', description: 'Description for Task 3', completed: false, photo: '/images3.jpeg' },
-  ];
+  newTaskPhoto = this.imageOptions[0].src;
+
+  tasks: Task[] = [];
   newTask = '';
 
   addTask() {
     if (!this.newTask.trim()) return;
 
-    this.tasks.push({
-      id: this.tasks.length + 1,
+    this.taskService.addTask({
       title: this.newTask,
       description: '',
-      completed: false,
-      photo: this.imageOptions[0].src
+      photo: this.newTaskPhoto
     });
 
     this.newTask = '';
