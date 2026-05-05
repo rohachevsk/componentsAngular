@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-profile-photo',
@@ -6,4 +6,6 @@ import { Component } from '@angular/core';
   templateUrl: './profile-photo.html',
   styleUrl: './profile-photo.css',
 })
-export class ProfilePhoto {}
+export class ProfilePhoto {
+  @Input() src: string = '';
+}

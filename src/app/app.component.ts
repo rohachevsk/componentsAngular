@@ -54,12 +54,19 @@ export class App {
     this.tasks.splice(index, 1);
   }
   
+  imageOptions = [
+    { label: 'Photo 1', src: '/images1.jpeg' },
+    { label: 'Photo 2', src: '/images2.jpeg' },
+    { label: 'Photo 3', src: '/images3.jpeg' },
+  ];
+
   tasks = [
-    { id: 1, title: 'Task 1', description: 'Description for Task 1', completed: false },
-    { id: 2, title: 'Task 2', description: 'Description for Task 2', completed: false },
-    { id: 3, title: 'Task 3', description: 'Description for Task 3', completed: false },
+    { id: 1, title: 'Task 1', description: 'Description for Task 1', completed: false, photo: '/images1.jpeg' },
+    { id: 2, title: 'Task 2', description: 'Description for Task 2', completed: false, photo: '/images2.jpeg' },
+    { id: 3, title: 'Task 3', description: 'Description for Task 3', completed: false, photo: '/images3.jpeg' },
   ];
   newTask = '';
+
   addTask() {
     if (!this.newTask.trim()) return;
 
@@ -67,7 +74,8 @@ export class App {
       id: this.tasks.length + 1,
       title: this.newTask,
       description: '',
-      completed: false
+      completed: false,
+      photo: this.imageOptions[0].src
     });
 
     this.newTask = '';
